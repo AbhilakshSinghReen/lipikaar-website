@@ -83,7 +83,7 @@ MIDDLEWARE = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [join(BASE_DIR, "build"), join(BASE_DIR, "templates")],
+        'DIRS': [join(BASE_DIR, 'volume', "build"), join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -102,7 +102,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': str(join(BASE_DIR, 'volumes', 'db.sqlite3')),
+        'NAME': str(join(BASE_DIR, 'volume', 'db.sqlite3')),
     }
 }
 #endregion
@@ -137,8 +137,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = join(BASE_DIR, 'volume', 'static')
 STATICFILES_DIRS = (
-    join(BASE_DIR, "build"),
-    join(BASE_DIR, "build/static"),
+    join(BASE_DIR, 'volume', "build"),
+    join(BASE_DIR, 'volume', "build/static"),
 )
 MEDIA_URL= "/media/"
 MEDIA_ROOT = join(BASE_DIR, 'volume', "media")
