@@ -1,0 +1,8 @@
+**/__pycache__
+
+docker/volumes/server/*
+lipikaar_website/frontend/*
+lipikaar_website/backend/env
+lipikaar_website/backend/build
+lipikaar_website/backend/volume
+

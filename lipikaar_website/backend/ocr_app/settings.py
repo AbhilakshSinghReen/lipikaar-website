@@ -12,28 +12,32 @@ Start Django Server
 from pathlib import Path
 from datetime import timedelta
 from os.path import join
-from decouple import config
+
+from decouple import Config, RepositoryEnv
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+ENV_FILE_PATH = join(BASE_DIR, "volume", ".env")
+env_config = Config(RepositoryEnv(ENV_FILE_PATH))
+
 #region Load env vars
-DEBUG = config('DEBUG', default=False, cast=bool)
-SECRET_KEY = config('SECRET_KEY')
-PAGE_LIMIT_PER_USER_PER_DAY = config('PAGE_LIMIT_PER_USER_PER_DAY', default=10, cast=int)
-NEW_UPLOAD_QUEUE_SIZE_LIMIT = config('NEW_UPLOAD_QUEUE_SIZE_LIMIT', default=10, cast=int)
-BACKEND_BASE_URL = config('BACKEND_BASE_URL')
-GET_MULTIPLE_UPLOADS_LIMIT = config('GET_MULTIPLE_UPLOADS_LIMIT', default=5, cast=int)
-CAN_DELETE_MULTIPLE_UPLOADS_IN_SINGLE_REQUEST = config('CAN_DELETE_MULTIPLE_UPLOADS_IN_SINGLE_REQUEST', default=False, cast=bool)
-CS__ALLOWED_HOSTS = config('CS__ALLOWED_HOSTS')
-CS__CORS_ORIGIN_WHITELIST = config('CS__CORS_ORIGIN_WHITELIST')
-DOCUMENT_PARSERS_API_PROVIDER_URL = config('DOCUMENT_PARSERS_API_PROVIDER_URL')
-TEXT_RECOGNIZERS_API_PROVIDER_URL = config('TEXT_RECOGNIZERS_API_PROVIDER_URL')
-DJANGO_TIME_ZONE = config('DJANGO_TIME_ZONE')
-DJANGO_LANGUAGE_CODE = config('DJANGO_LANGUAGE_CODE')
-BACKEND_VERSION = config('BACKEND_VERSION')
-FRONTEND_VERSION = config('FRONTEND_VERSION')
-SERVICE_API_KEY = config('SERVICE_API_KEY')
+DEBUG = env_config('DEBUG', default=False, cast=bool)
+SECRET_KEY = env_config('SECRET_KEY')
+PAGE_LIMIT_PER_USER_PER_DAY = env_config('PAGE_LIMIT_PER_USER_PER_DAY', default=10, cast=int)
+NEW_UPLOAD_QUEUE_SIZE_LIMIT = env_config('NEW_UPLOAD_QUEUE_SIZE_LIMIT', default=10, cast=int)
+BACKEND_BASE_URL = env_config('BACKEND_BASE_URL')
+GET_MULTIPLE_UPLOADS_LIMIT = env_config('GET_MULTIPLE_UPLOADS_LIMIT', default=5, cast=int)
+CAN_DELETE_MULTIPLE_UPLOADS_IN_SINGLE_REQUEST = env_config('CAN_DELETE_MULTIPLE_UPLOADS_IN_SINGLE_REQUEST', default=False, cast=bool)
+CS__ALLOWED_HOSTS = env_config('CS__ALLOWED_HOSTS')
+CS__CORS_ORIGIN_WHITELIST = env_config('CS__CORS_ORIGIN_WHITELIST')
+DOCUMENT_PARSERS_API_PROVIDER_URL = env_config('DOCUMENT_PARSERS_API_PROVIDER_URL')
+TEXT_RECOGNIZERS_API_PROVIDER_URL = env_config('TEXT_RECOGNIZERS_API_PROVIDER_URL')
+DJANGO_TIME_ZONE = env_config('DJANGO_TIME_ZONE')
+DJANGO_LANGUAGE_CODE = env_config('DJANGO_LANGUAGE_CODE')
+BACKEND_VERSION = env_config('BACKEND_VERSION')
+FRONTEND_VERSION = env_config('FRONTEND_VERSION')
+SERVICE_API_KEY = env_config('SERVICE_API_KEY')
 #endregion
 
 NEW_OCR_ACCEPTED_FILE_EXTENSIONS = [".pdf", ".jpg", ".jpeg"]
@@ -98,7 +102,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': str(BASE_DIR / 'db.sqlite3'),
+        'NAME': str(join(BASE_DIR, 'volumes', 'db.sqlite3')),
     }
 }
 #endregion
@@ -131,14 +135,14 @@ USE_TZ = True
 
 #region Static, Media, and Cache Settings
 STATIC_URL = '/static/'
-STATIC_ROOT = join(BASE_DIR, 'static')
+STATIC_ROOT = join(BASE_DIR, 'volume', 'static')
 STATICFILES_DIRS = (
     join(BASE_DIR, "build"),
     join(BASE_DIR, "build/static"),
 )
 MEDIA_URL= "/media/"
-MEDIA_ROOT = join(BASE_DIR, "media")
-CACHE_ROOT = join(BASE_DIR, "cache")
+MEDIA_ROOT = join(BASE_DIR, 'volume', "media")
+CACHE_ROOT = join(BASE_DIR, 'volume', "cache")
 #endregion
 
 #region DRF Settings
